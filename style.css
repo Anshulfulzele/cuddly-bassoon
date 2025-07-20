@@ -1,0 +1,443 @@
+/* Basic Resets & Global Styles */
+:root {
+    --bg-dark: #0a0a0d; /* Very dark, almost black */
+    --neon-blue: #00f0ff; /* Soft cyan/blue neon */
+    --neon-purple: #9000ff; /* Soft purple neon */
+    --neon-orange: #ff6600; /* Soft orange/amber neon */
+    --text-light: #e0e0e0; /* Light grey for text */
+    --font-family-body: 'Outfit', sans-serif; /* Gen Z friendly body font */
+    --font-family-heading: 'Oxanium', monospace; /* A more distinct, techy font for titles */
+    --menu-bg-alpha: rgba(10, 10, 13, 0.95); /* Semi-transparent dark for menu */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-y: auto; /* ALLOW body scrolling now for the main photo showcase */
+    font-family: var(--font-family-body);
+    color: var(--text-light);
+    background-color: var(--bg-dark);
+    position: relative;
+    cursor: default; /* Default cursor for most elements */
+}
+
+a {
+    text-decoration: none;
+    color: var(--neon-blue);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+a:hover {
+    color: var(--neon-orange);
+    text-shadow: 0 0 5px var(--neon-orange);
+}
+
+/* Enhanced Cozy & Magical Background (Arrietty Inspired) */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(0, 240, 255, 0.1) 0%, transparent 30%), /* Soft blue glow bottom-left */
+        radial-gradient(circle at 80% 20%, rgba(144, 0, 255, 0.08) 0%, transparent 35%), /* Soft purple glow top-right */
+        radial-gradient(circle at 50% 50%, rgba(255, 102, 0, 0.06) 0%, transparent 40%), /* Soft orange glow center */
+        repeating-radial-gradient(circle at 10% 40%, transparent 0, rgba(50, 50, 50, 0.02) 3px, transparent 6px), /* Subtle dust/particle effect 1 */
+        repeating-radial-gradient(circle at 90% 60%, transparent 0, rgba(70, 70, 70, 0.015) 2px, transparent 4px), /* Subtle dust/particle effect 2 */
+        linear-gradient(to bottom, transparent 0%, rgba(10, 10, 13, 0.1) 70%, rgba(10, 10, 13, 0.3) 100%); /* Gentle gradient suggesting depth */
+    background-size: 300% 300%, auto, auto, 150px 150px, 200px 200px, auto;
+    background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat, no-repeat;
+    animation: enhancedNeonGlowShift 30s ease-in-out infinite alternate, subtleTwinkle 10s linear infinite;
+    opacity: 1; /* Keep opacity at 1 for these layered effects as transparency is in rgba() */
+    filter: blur(100px); /* Still a significant blur for softness */
+    z-index: -1;
+    pointer-events: none;
+ }
+
+ @keyframes enhancedNeonGlowShift {
+    0% { background-position: 0% 0%, center, center, 0 0, 0 0, 0 0; }
+    100% { background-position: 100% 100%, center, center, 100% 100%, 100% 100%, 0 100%; }
+ }
+
+ @keyframes subtleTwinkle {
+    0% { filter: blur(100px) brightness(1); }
+    50% { filter: blur(110px) brightness(1.02); }
+    100% { filter: blur(100px) brightness(1); }
+ }
+
+/* Main Photo Showcase - Scrolling with Gaps */
+#photo-showcase {
+    width: 100vw;
+    min-height: 100vh; /* Minimum height for initial view */
+    padding-top: 5vh; /* Top padding to ensure first image isn't flush */
+    background-color: transparent; /* Essential so the body background shows through gaps */
+    position: relative;
+    z-index: 1; /* Ensure it's above the background glow */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+}
+
+.photo-item {
+    width: 90vw; /* 90% of viewport width */
+    max-width: 900px; /* Maximum width for images on larger screens */
+    min-height: 70vh; /* Minimum height, content will dictate more */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Hide any overflow */
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.4); /* Subtle dark background behind image */
+    border-radius: 15px; /* Slightly rounded corners */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* Deep shadow for pop-out effect */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Very subtle light border */
+    transform: translateY(50px); /* Start slightly off-screen */
+    opacity: 0; /* Hidden initially */
+    transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth reveal with cubic-bezier */
+    margin-bottom: 10vh; /* Gap at the bottom of each photo item */
+}
+
+/* This class will be added by JavaScript when the photo comes into view */
+.photo-item.in-view {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.photo-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Ensures entire image is visible within its box */
+    display: block;
+    border-radius: 10px; /* Slightly smaller radius for inner image */
+}
+
+/* Ensure the last photo has enough space to be fully visible and scrollable */
+.photo-item:last-of-type {
+    margin-bottom: 20vh; /* More space at the very bottom */
+}
+
+
+/* Hamburger Menu Icon */
+.menu-icon {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    width: 45px;
+    height: 35px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    z-index: 1001; /* Above everything else */
+    transition: transform 0.3s ease;
+}
+
+.menu-icon:hover {
+    transform: scale(1.1);
+}
+
+.menu-icon .bar {
+    width: 100%;
+    height: 4px; /* Thicker bars for visual presence */
+    background-color: var(--neon-blue); /* Subtle neon glow */
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px var(--neon-blue); /* Stronger glow effect */
+}
+
+/* Animation for active menu icon */
+.menu-icon.active .bar-1 { transform: rotate(-45deg) translate(-7px, 7px); background-color: var(--neon-orange); }
+.menu-icon.active .bar-2 { opacity: 0; }
+.menu-icon.active .bar-3 { transform: rotate(45deg) translate(-7px, -7px); background-color: var(--neon-orange); }
+
+
+/* Overlay Navigation Menu (Pop-up from hamburger) */
+.overlay-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--menu-bg-alpha); /* Semi-transparent background */
+    backdrop-filter: blur(15px); /* Stronger frosted glass effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-100%); /* Slide down from top */
+    transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+    z-index: 1000;
+}
+
+.overlay-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.menu-list {
+    list-style: none;
+    text-align: center;
+}
+
+.menu-list li {
+    margin: 25px 0; /* More space between items */
+}
+
+.menu-list .menu-link {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 3em; /* Larger font for impact */
+    font-weight: 700;
+    font-family: var(--font-family-heading); /* Use heading font for menu links */
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    position: relative;
+    padding: 5px 10px; /* For hover area */
+    display: inline-block; /* For underline effect */
+}
+
+.menu-list .menu-link::before {
+    content: '';
+    position: absolute;
+    bottom: 5px; /* Adjust based on padding */
+    left: 50%; /* Start from center */
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background-color: var(--neon-blue);
+    transition: width 0.3s ease;
+}
+
+.menu-list .menu-link:hover {
+    color: var(--neon-blue);
+    text-shadow: 0 0 15px var(--neon-blue); /* Stronger glow on hover */
+}
+
+.menu-list .menu-link:hover::before {
+    width: calc(100% - 20px); /* Adjust for padding */
+}
+
+
+/* Content Overlay (Slides over photo showcase) */
+#content-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-dark); /* Solid dark background for content */
+    transform: translateX(100%); /* Initially off-screen to the right */
+    transition: transform 0.6s ease-out; /* Smooth slide transition */
+    z-index: 999; /* Below overlay menu, above photo showcase */
+    overflow-y: auto; /* Allow scrolling within content */
+    -webkit-overflow-scrolling: touch; /* For smooth iOS scrolling */
+    display: flex; /* Use flexbox for centering content */
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 20px 20px; /* Top padding for header space */
+}
+
+#content-overlay.active {
+    transform: translateX(0); /* Slide in */
+}
+
+.content-section {
+    max-width: 900px; /* Max width for readability */
+    width: 100%;
+    margin-bottom: 60px; /* Space between sections */
+    padding: 30px;
+    background-color: rgba(10, 10, 13, 0.85); /* Slightly lighter background for content blocks */
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.6); /* Deeper shadow */
+    border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
+    display: none; /* Hidden by default, JS toggles 'block' */
+}
+
+.content-section.active-section {
+    display: block; /* Show the active section */
+}
+
+.section-title {
+    font-size: 3em; /* Larger, impactful title */
+    color: var(--neon-orange); /* Section titles with a different neon pop */
+    margin-bottom: 25px;
+    text-align: center;
+    font-family: var(--font-family-heading); /* Use heading font */
+    text-shadow: 0 0 12px var(--neon-orange);
+    letter-spacing: 2px;
+}
+
+.section-text {
+    font-size: 1.15em;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-align: center; /* Center text in intro paragraphs */
+}
+
+/* Portfolio Gallery Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
+    gap: 15px; /* Space between images */
+    padding: 20px 0;
+    justify-content: center; /* Center items if they don't fill a row */
+}
+
+.grid-item {
+    width: 100%;
+    height: 150px; /* Fixed height for consistent grid */
+    object-fit: cover; /* Crop images to fit */
+    border-radius: 8px;
+    filter: brightness(0.8); /* Slightly dim until hover */
+    transition: transform 0.3s ease, filter 0.3s ease;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.grid-item:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1); /* Brighten on hover */
+    box-shadow: 0 0 15px var(--neon-blue); /* Subtle blue glow on hover */
+}
+
+
+/* My Story Section */
+.story-entry {
+    background-color: rgba(0, 0, 0, 0.4); /* Slightly darker background for story entries */
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    text-align: center; /* Center story content */
+}
+
+.story-title {
+    font-size: 1.8em;
+    color: var(--neon-blue);
+    margin-bottom: 15px;
+    font-family: var(--font-family-heading);
+    text-shadow: 0 0 7px var(--neon-blue);
+}
+
+.story-text {
+    font-size: 1.05em;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.story-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 300px; /* Limit image height in stories */
+    object-fit: contain; /* Ensure full image is seen */
+    border-radius: 8px;
+    border: 2px solid var(--neon-purple); /* Frame with neon color */
+    box-shadow: 0 0 10px var(--neon-purple);
+    margin-top: 15px;
+}
+
+
+/* Contact Details Box */
+.contact-details-box {
+    padding: 35px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--neon-orange); /* Stronger border for contact */
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 20px var(--neon-orange); /* Stronger glow */
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Springy animation */
+    transform: scale(0.8) translateY(50px); /* Start smaller and lower */
+    opacity: 0;
+}
+
+.contact-details-box.revealed {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+.contact-details-box p {
+    font-size: 1.2em;
+    margin-bottom: 12px;
+}
+
+.contact-details-box strong {
+    color: var(--neon-blue);
+}
+
+.contact-details-box a {
+    font-weight: 700;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .menu-icon {
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 30px;
+    }
+
+    .menu-icon .bar {
+        height: 3px;
+    }
+
+    .menu-icon.active .bar-1 { transform: rotate(-45deg) translate(-5px, 6px); }
+    .menu-icon.active .bar-3 { transform: rotate(45deg) translate(-5px, -6px); }
+
+    .menu-list .menu-link {
+        font-size: 2em; /* Smaller on mobile */
+    }
+
+    .section-title {
+        font-size: 2.2em;
+    }
+
+    .section-text {
+        font-size: 1em;
+    }
+
+    .story-title {
+        font-size: 1.5em;
+    }
+
+    .story-text {
+        font-size: 0.95em;
+    }
+
+    .contact-details-box p {
+        font-size: 1.1em;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Smaller items on small screens */
+    }
+    .grid-item {
+        height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-list .menu-link {
+        font-size: 1.7em;
+    }
+    .section-title {
+        font-size: 1.8em;
+    }
+    .contact-details-box p {
+        font-size: 1em;
+    }
+}
