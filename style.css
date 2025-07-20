@@ -25,6 +25,13 @@ html, body {
     background-color: var(--bg-dark);
     position: relative;
     cursor: default; /* Default cursor for most elements */
+
+    /* Wallpaper Image Added */
+    background-image: url('https://i.postimg.cc/MXSYDV7B/149ed2ccbe6e61e9c806671c30533dba.jpg');
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-position: center center; /* Centers the image */
+    background-attachment: fixed; /* Keeps the background fixed when scrolling */
+    background-repeat: no-repeat; /* Prevents image repetition */
 }
 
 a {
@@ -34,8 +41,8 @@ a {
 }
 
 a:hover {
-    color: var(--neon-orange);
-    text-shadow: 0 0 5px var(--neon-orange);
+    color: var(--neon-orange); /* Updated hover color */
+    text-shadow: 0 0 5px var(--neon-orange); /* Updated hover shadow */
 }
 
 /* Enhanced Cozy & Magical Background (Arrietty Inspired) */
@@ -61,6 +68,7 @@ body::before {
     z-index: -1;
     pointer-events: none;
  }
+ /* This whole block is new or significantly changed based on user provided style.css */
 
  @keyframes enhancedNeonGlowShift {
     0% { background-position: 0% 0%, center, center, 0 0, 0 0, 0 0; }
@@ -125,42 +133,33 @@ body::before {
 }
 
 
-/* Hamburger Menu Icon */
-.menu-icon {
+/* Neon Menu Button Styling (Replaces .menu-icon) */
+.neon-menu-btn {
     position: fixed;
-    top: 25px;
-    right: 25px;
-    width: 45px;
-    height: 35px;
+    top: 25px; /* Adjusted to match old menu icon position */
+    right: 25px; /* Adjusted to match old menu icon position */
+    z-index: 1001; /* Ensure it's on top */
     background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0;
-    z-index: 1001; /* Above everything else */
-    transition: transform 0.3s ease;
-}
-
-.menu-icon:hover {
-    transform: scale(1.1);
-}
-
-.menu-icon .bar {
-    width: 100%;
-    height: 4px; /* Thicker bars for visual presence */
-    background-color: var(--neon-blue); /* Subtle neon glow */
+    border: 2px solid var(--neon-blue);
+    color: var(--neon-blue);
+    font-family: var(--font-family-heading);
+    font-size: 1.2em;
+    padding: 10px 20px;
     border-radius: 5px;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 8px var(--neon-blue); /* Stronger glow effect */
+    cursor: pointer;
+    text-shadow: 0 0 5px var(--neon-blue), 0 0 15px var(--neon-blue);
+    box-shadow: 0 0 10px var(--neon-blue) inset, 0 0 20px var(--neon-blue);
+    transition: all 0.3s ease-in-out;
 }
 
-/* Animation for active menu icon */
-.menu-icon.active .bar-1 { transform: rotate(-45deg) translate(-7px, 7px); background-color: var(--neon-orange); }
-.menu-icon.active .bar-2 { opacity: 0; }
-.menu-icon.active .bar-3 { transform: rotate(45deg) translate(-7px, -7px); background-color: var(--neon-orange); }
+.neon-menu-btn:hover {
+    background-color: var(--neon-blue);
+    color: var(--bg-dark);
+    text-shadow: none;
+    box-shadow: 0 0 20px var(--neon-blue) inset, 0 0 40px var(--neon-blue);
+}
+
+/* Old .menu-icon styles are removed */
 
 
 /* Overlay Navigation Menu (Pop-up from hamburger) */
@@ -384,19 +383,14 @@ body::before {
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .menu-icon {
+    .neon-menu-btn { /* Updated from .menu-icon */
         top: 15px;
         right: 15px;
-        width: 40px;
-        height: 30px;
+        font-size: 1em;
+        padding: 8px 15px;
     }
 
-    .menu-icon .bar {
-        height: 3px;
-    }
-
-    .menu-icon.active .bar-1 { transform: rotate(-45deg) translate(-5px, 6px); }
-    .menu-icon.active .bar-3 { transform: rotate(45deg) translate(-5px, -6px); }
+    /* Old .menu-icon specific styles removed */
 
     .menu-list .menu-link {
         font-size: 2em; /* Smaller on mobile */
